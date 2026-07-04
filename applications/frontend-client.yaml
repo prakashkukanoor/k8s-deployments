@@ -66,4 +66,10 @@ spec:
         name: frontend-client
         command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
         ports:
+        - containerPort: 9090
+
+      - image: docker.io/mccutchen/go-httpbin:v2.15.0
+        imagePullPolicy: IfNotPresent
+        name: sidecar-container
+        ports:
         - containerPort: 8080

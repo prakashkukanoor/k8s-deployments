@@ -61,9 +61,8 @@ spec:
     spec:
       serviceAccountName: backend-server
       containers:
-      - image: busybox:latest
+      - image: docker.io/mccutchen/go-httpbin:v2.15.0
         imagePullPolicy: IfNotPresent
-        command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
         name: backend-server
         ports:
         - containerPort: 8080
