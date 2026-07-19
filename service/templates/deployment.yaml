@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.application.name }}
+  namespace: {{ .Values.application.namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.application.name }}
+      version: {{ .Values.application.version }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.application.name }}
+        version: {{ .Values.application.version }}
+    spec:
+      serviceAccountName: "{{ .Values.application.name }}-sa"
+      containers:
+      - name: {{ .Values.application.name }}
+        image: "{{.Values.application.image}}:{{.Values.application.tag}}"
+        imagePullPolicy: {{ .Values.application.imagePullPolicy }}
+        {{- if .Values.application.command -}}
+        command: {{ .Values.application.command }}
+        {{- end -}}
+        ports:
+        - containerPort: {{ .Values.application.port }}
+
+      - name: {{ .Values.sideCar.name }}
+        image: "{{ .Values.sideCar.image }}:{{ .Value.sideCar.tag }}"
+        imagePullPolicy: {{ .Values.sideCar.image }}
+        ports:
+        - containerPort: {{ .Values.sideCar.port}}
