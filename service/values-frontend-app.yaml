@@ -17,5 +17,3 @@ sideCar:
   tag: v2.15.0
   imagePullPolicy: IfNotPresent
   port: 8080
-  
-
